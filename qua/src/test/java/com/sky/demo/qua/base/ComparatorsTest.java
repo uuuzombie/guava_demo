@@ -24,7 +24,6 @@ public class ComparatorsTest {
 	//private static LongComparator longComparator = new LongComparator();
 	
 	public ComparatorsTest(int param1,int param2,int expected) {
-	
 		this.param1 = new LongHolder(param1);
 		this.param2 = new LongHolder(param2);
 		this.expected = expected;
@@ -32,13 +31,11 @@ public class ComparatorsTest {
 	
 	@Parameters
 	public static Collection prepareData(){
-		
 		Object [][] object = {
 				{123,123,0},
 				{1,2,-1},
 				{2,1,1}
 		};
-		
 		return Arrays.asList(object);
 	}
 	

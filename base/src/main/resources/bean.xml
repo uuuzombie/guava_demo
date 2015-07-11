@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="global" class="com.sky.demo.base.model.City">
+        <property name="name" value="vk" />
+        <property name="zipCode" value="1"/>
+        <property name="climate" value="SUB_TROPICAL"/>
+        <property name="averageRainfall" value="100"/>
+        <property name="population" value="1000"/>
+        <!--<constructor-arg index="0" value="0"/>-->
+        <!--<constructor-arg index="1" value="1"/>-->
+        <!--<constructor-arg index="2" value="2"/>-->
+        <!--<constructor-arg index="3" ref="climate"/>-->
+        <!--<constructor-arg index="4" value="4"/>-->
+    </bean>
+
+
+</beans>

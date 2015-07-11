@@ -14,7 +14,6 @@ import java.util.Comparator;
 public class Comparators {
 
     public static class LongComparator implements Comparator<LongHolder> {
-
         @Override
         public int compare(LongHolder o1, LongHolder o2) {
             // TODO fix this implementation, and write a unit test to prove that yours are correct
