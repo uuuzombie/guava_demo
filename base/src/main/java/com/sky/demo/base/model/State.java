@@ -14,6 +14,11 @@ public class State {
 
     private Region region;
 
+    public State(String name, String code) {
+        this.name = name;
+        this.code = code;
+    }
+
     public State(String name, String code, Set<City> mainCities, Region region) {
         this.name = name;
         this.code = code;
