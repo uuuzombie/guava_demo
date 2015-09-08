@@ -1,4 +1,4 @@
-package com.sky.demo.io.parsejstack;
+package com.sky.demo.io.parse_jstack;
 
 import org.junit.Test;
 

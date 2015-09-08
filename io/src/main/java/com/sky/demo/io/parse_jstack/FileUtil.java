@@ -1,4 +1,4 @@
-package com.sky.demo.io.parsejstack;
+package com.sky.demo.io.parse_jstack;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
@@ -27,7 +27,7 @@ public class FileUtil {
      * @throws java.io.IOException
      */
     public static void readFile(String path) throws IOException {
-        URL resource = FileUtil.class.getResource(path);  //j.stack
+        URL resource = FileUtil.class.getResource(path);
         Preconditions.checkNotNull(resource);
 
         File inputFile = new File(resource.getFile());
