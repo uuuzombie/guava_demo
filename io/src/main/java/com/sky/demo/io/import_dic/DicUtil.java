@@ -6,6 +6,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import com.google.common.io.LineProcessor;
+import org.springframework.util.NumberUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +39,11 @@ public class DicUtil {
 
                     List<String> list = Splitter.on("\t").omitEmptyStrings().trimResults().splitToList(line);
                     result.put(list.get(0), Integer.valueOf(list.get(1)));
+
+//                    Map<String, String> map = Splitter.on("\n").withKeyValueSeparator("\t").split(line);
+//                    for (Map.Entry<String, String> entry : map.entrySet()) {
+//                        result.put(entry.getKey(), Integer.valueOf(entry.getValue()));
+//                    }
                     return true;
                 }
 
