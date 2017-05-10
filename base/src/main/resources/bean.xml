@@ -9,6 +9,7 @@
         <property name="climate" value="SUB_TROPICAL"/>
         <property name="averageRainfall" value="100"/>
         <property name="population" value="1000"/>
+
         <!--<constructor-arg index="0" value="0"/>-->
         <!--<constructor-arg index="1" value="1"/>-->
         <!--<constructor-arg index="2" value="2"/>-->

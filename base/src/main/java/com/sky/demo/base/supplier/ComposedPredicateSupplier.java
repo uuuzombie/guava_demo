@@ -29,4 +29,6 @@ public class ComposedPredicateSupplier implements Supplier<Predicate<String>> {
         Function<String,State> mf = Functions.forMap(stateMap);
         return Predicates.compose(new RegionPredicate(), mf);
     }
+
+    
 }
