@@ -18,7 +18,7 @@ public class ComparatorsTest {
 
 	private LongHolder param1;
 	private LongHolder param2;
-	
+
 	private int expected;
 	
 	//private static LongComparator longComparator = new LongComparator();
@@ -29,12 +29,12 @@ public class ComparatorsTest {
 		this.expected = expected;
 	}
 	
-	@Parameters
+	@Parameters  //need @RunWith(Parameterized.class)
 	public static Collection prepareData(){
-		Object [][] object = {
-				{123,123,0},
-				{1,2,-1},
-				{2,1,1}
+		Object[][] object = {
+				{123, 123, 0},
+				{1, 2, -1},
+				{2, 1, 1}
 		};
 		return Arrays.asList(object);
 	}
@@ -53,7 +53,7 @@ public class ComparatorsTest {
 		
 		LongComparator longComparator = new LongComparator();
 		int result = longComparator.compare(param1, param2);
-		assertEquals(expected,result);
+		assertEquals(expected, result);
 	}
 
 }

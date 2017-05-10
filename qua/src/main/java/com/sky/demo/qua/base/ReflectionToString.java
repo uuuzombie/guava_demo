@@ -53,6 +53,14 @@ public class ReflectionToString {
     }
 
     /**
+     * @param outputStatics whether to include static fields
+     */
+    public ReflectionToString appendStatics(boolean outputStatics) {
+        this.appendStatics = outputStatics;
+        return this;
+    }
+
+    /**
      * @param outputTransients whether to include transient fields
      */
     public ReflectionToString appendTransients(boolean outputTransients) {
@@ -60,13 +68,6 @@ public class ReflectionToString {
         return this;
     }
 
-    /**
-     * @param outputStatics whether to include static fields
-     */
-    public ReflectionToString appendStatics(boolean outputStatics) {
-        this.appendStatics = outputStatics;
-        return this;
-    }
 
     public boolean isAppendStatics() {
         return appendStatics;
@@ -76,13 +77,17 @@ public class ReflectionToString {
         return appendTransients;
     }
 
+
+
     public String toString(Object object) {
         // TODO implement this
+
         return null;
     }
 
     public String toStringExcludeFields(Object object, String... excludedFields) {
         // TODO implement this
+
         return null;
     }
 

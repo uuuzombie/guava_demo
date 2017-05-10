@@ -1,5 +1,6 @@
 package com.sky.demo.qua.collect;
 
+import com.google.common.collect.ConcurrentHashMultiset;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Ordering;
 import com.sky.demo.qua.annotation.Difficulty;
@@ -15,6 +16,8 @@ import java.util.List;
  */
 @Exercise(name = "GroupCounter", difficulty = Difficulty.NORMAL, related = {Multiset.class, Ordering.class})
 public class GroupCounter<E> {
+
+//    private Multiset multiset = new ConcurrentHashMultiset();
 
     public GroupCounter() {
 

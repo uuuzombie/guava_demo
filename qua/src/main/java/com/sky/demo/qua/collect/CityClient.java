@@ -1,9 +1,17 @@
 package com.sky.demo.qua.collect;
 
-import com.google.common.base.Objects;
+import com.google.common.base.*;
 import com.google.common.collect.*;
 import com.sky.demo.qua.annotation.Difficulty;
 import com.sky.demo.qua.annotation.Exercise;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -19,15 +27,16 @@ import com.sky.demo.qua.annotation.Exercise;
 @Exercise(name = "CityClient", difficulty = Difficulty.NORMAL, related = { Multimap.class, BiMap.class })
 public class CityClient {
 
-	private ListMultimap<Province,City> map = ArrayListMultimap.create();
+	private ListMultimap<Province, City> provinceCityListMultimap;  // = ArrayListMultimap.create();
 	
     public static Builder create() {
         return new Builder();
     }
 
+    //builder 模式
     private CityClient(Builder builder) {
         // TODO implement this;
-    	this.map = builder.map;
+    	this.provinceCityListMultimap = builder.map;
     }
 
     /**
@@ -37,10 +46,28 @@ public class CityClient {
      */
     public ImmutableSet<City> getCities(int provinceId) {
         // TODO implement this
-        return null;
-    	
-    	//ImmutableSet<City> immutableSet = ImmutableSet<CityClient.City>
-    	
+
+//        Collection<Province> provinces = Collections2.filter(provinceCityListMultimap.keySet(), new Predicate<Province>() {
+//            @Override
+//            public boolean apply(@Nullable Province input) {
+//                return input.getProvinceId() == provinceId;
+//            }
+//        });
+
+        Set<Province> provinces = provinceCityListMultimap.keySet().stream().filter(new java.util.function.Predicate<Province>() {
+            @Override
+            public boolean test(Province province) {
+                return province.getProvinceId() == provinceId;
+            }
+        }).collect(Collectors.toSet());
+
+        ImmutableSet<City> immutableSet = null;
+        if (CollectionUtils.isNotEmpty(provinces)) {
+            Collection<City> cityList = provinceCityListMultimap.asMap().get(provinces.iterator().next());
+
+            immutableSet = ImmutableSet.copyOf(cityList);
+        }
+        return immutableSet;
     }
 
     /**
@@ -48,7 +75,8 @@ public class CityClient {
      */
     public ImmutableSet<Province> getProvinces() {
         // TODO implement this
-        return null;
+        ImmutableSet<Province> immutableSet = ImmutableSet.copyOf(provinceCityListMultimap.keySet());
+        return immutableSet;
     }
 
     /**
@@ -58,6 +86,7 @@ public class CityClient {
      */
     public Province getProvinceFor(int cityId) {
         // TODO implement this
+
         return null;
     }
 
@@ -68,7 +97,14 @@ public class CityClient {
      */
     public Province getProvince(int provinceId) {
         // TODO implement this
-        return null;
+        Set<Province> provinces = (HashSet<Province>)provinceCityListMultimap.keySet().stream().filter(new java.util.function.Predicate<Province>() {
+            @Override
+            public boolean test(Province province) {
+                return province.getProvinceId() == provinceId;
+            }
+        }).collect(Collectors.toSet());
+
+        return CollectionUtils.isEmpty(provinces) ? null : provinces.iterator().next();
     }
 
     /**
@@ -76,7 +112,14 @@ public class CityClient {
      */
     public City getCity(int cityId) {
         // TODO implement this
-        return null;
+        Set<City> cities = provinceCityListMultimap.values().stream().filter(new java.util.function.Predicate<City>() {
+            @Override
+            public boolean test(City city) {
+                return city.getCityId() == cityId;
+            }
+        }).collect(Collectors.toSet());
+
+        return CollectionUtils.isEmpty(cities) ? null : cities.iterator().next();
     }
 
     /**
@@ -85,7 +128,9 @@ public class CityClient {
      */
     public String getCityUrlFor(int cityId) {
         // TODO implement this
-        return null;
+        City city = getCity(cityId);
+        String url = city == null ? null : city.getCityUrl();
+        return url;
     }
 
     /**
@@ -94,12 +139,25 @@ public class CityClient {
      */
     public int getCityIdFor(String cityUrl) {
         // TODO implement this
-        return 0;
+
+        Set<City> cities = provinceCityListMultimap.values().stream().filter(new java.util.function.Predicate<City>() {
+            @Override
+            public boolean test(City city) {
+                return StringUtils.equals(cityUrl, city.getCityUrl());
+            }
+        }).collect(Collectors.toSet());
+
+        int id = 0;
+        if (CollectionUtils.isNotEmpty(cities)) {
+            id = cities.iterator().next().getCityId();
+        }
+        return id;
     }
+
 
     public final static class Builder {
 
-    	private ListMultimap<Province,City> map = ArrayListMultimap.create();
+    	private ListMultimap<Province, City> map = ArrayListMultimap.create();
     	
     	
         private Builder() {
@@ -108,21 +166,16 @@ public class CityClient {
         public Builder cityEntry(CityEntry cityEntry) {
             // TODO implement this
         	City city = new City(cityEntry.getCityId(), cityEntry.getCityUrl(), cityEntry.getCityName());
-        	
         	Province province = new Province(cityEntry.getProvinceId(), cityEntry.getProvinceName());
-        	
-        	this.map.put(province, city);
-        	
+        	map.put(province, city);
             return this;
         }
 
         public Builder cityEntries(Iterable<CityEntry> cityEntries) {
             // TODO implement this
-        	
         	for (CityEntry cityEntry : cityEntries) {
-        		this.cityEntry(cityEntry);
+        		cityEntry(cityEntry);
 			}
-        	
             return this;
         }
 
@@ -134,14 +187,21 @@ public class CityClient {
     public static class CityEntry {
 
         private int provinceId;
-
         private String provinceName;
-
         private int cityId;
-
         private String cityUrl;
-
         private String cityName;
+
+        public CityEntry(int provinceId, String provinceName, int cityId, String cityUrl, String cityName) {
+            this.provinceId = provinceId;
+            this.provinceName = provinceName;
+            this.cityId = cityId;
+            this.cityUrl = cityUrl;
+            this.cityName = cityName;
+        }
+
+        public CityEntry() {
+        }
 
         public int getProvinceId() {
             return provinceId;
@@ -182,14 +242,23 @@ public class CityClient {
         public void setCityName(String cityName) {
             this.cityName = cityName;
         }
+
+        @Override
+        public String toString() {
+            return Objects.toStringHelper(this)
+                    .add("provinceId", provinceId)
+                    .add("provinceName", provinceName)
+                    .add("cityId", cityId)
+                    .add("cityUrl", cityUrl)
+                    .add("cityName", cityName)
+                    .toString();
+        }
     }
 
     public static class City {
 
         private final int cityId;
-
         private final String cityUrl;
-
         private final String name;
 
         public City(int cityId, String cityUrl, String name) {
@@ -239,7 +308,10 @@ public class CityClient {
 
         @Override
         public String toString() {
-            return Objects.toStringHelper(this).add("cityId", cityId).add("cityUrl", cityUrl).add("name", name)
+            return Objects.toStringHelper(this)
+                    .add("cityId", cityId)
+                    .add("cityUrl", cityUrl)
+                    .add("name", name)
                     .toString();
         }
     }
@@ -247,7 +319,6 @@ public class CityClient {
     public static class Province {
 
         private final int provinceId;
-
         private final String name;
 
         public Province(int provinceId, String name) {
@@ -289,8 +360,17 @@ public class CityClient {
 
         @Override
         public String toString() {
-            return Objects.toStringHelper(this).add("provinceId", provinceId).add("name", name).toString();
+            return Objects.toStringHelper(this)
+                    .add("provinceId", provinceId)
+                    .add("name", name).toString();
         }
     }
 
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("provinceCityListMultimap", provinceCityListMultimap)
+                .toString();
+    }
 }

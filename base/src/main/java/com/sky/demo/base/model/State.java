@@ -1,9 +1,7 @@
 package com.sky.demo.base.model;
 
-import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
-import com.google.common.util.concurrent.MoreExecutors;
 
 import java.util.Set;
 

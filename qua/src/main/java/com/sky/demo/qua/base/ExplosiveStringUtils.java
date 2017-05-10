@@ -133,7 +133,6 @@ public abstract class ExplosiveStringUtils {
     public static <T> String join(Iterable<T> iterable, @Nullable String separator) {
         // TODO implement this
     	Preconditions.checkNotNull(iterable);
-        Preconditions.checkNotNull(separator);
     	return Joiner.on(separator).join(iterable);
     }
 
@@ -150,7 +149,6 @@ public abstract class ExplosiveStringUtils {
     public static <T> String joinAndIgnoreNull(Iterable<T> iterable, @Nullable String separator) {
         // TODO implement this
         Preconditions.checkNotNull(iterable);
-        Preconditions.checkNotNull(separator);
     	return Joiner.on(separator).skipNulls().join(iterable);
     }
 

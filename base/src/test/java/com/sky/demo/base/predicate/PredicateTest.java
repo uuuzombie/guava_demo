@@ -54,7 +54,7 @@ public class PredicateTest {
     @Test
     public void test_Predicate_or(){
         Predicate<City> smallOrDry = Predicates.or(new SmallPopulationPredicate(),new LowRainFallPredicate());
-        Collection<City> cityCollection = Collections2.filter(cityList,smallOrDry);
+        Collection<City> cityCollection = Collections2.filter(cityList, smallOrDry);
 
         System.out.println(cityCollection);
     }
@@ -62,7 +62,7 @@ public class PredicateTest {
     @Test
     public void test_Predicate_not(){
         Predicate notDry = Predicates.not(new LowRainFallPredicate());
-        Collection<City> cities = Collections2.filter(cityList,notDry);
+        Collection<City> cities = Collections2.filter(cityList, notDry);
 
         System.out.println(cities);
     }
