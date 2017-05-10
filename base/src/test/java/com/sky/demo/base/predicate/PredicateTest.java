@@ -15,6 +15,7 @@ import org.junit.Test;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by rg on 15/7/11.
@@ -22,7 +23,6 @@ import java.util.Map;
 public class PredicateTest {
 
     private List<City> cityList = Lists.newArrayList();
-
     private Map<String,City> cityMap = Maps.newHashMap();
 
     @Before
@@ -69,6 +69,7 @@ public class PredicateTest {
 
     @Test
     public void test_Predicate_compose(){
+        //Guava Lists.transform
         List<String> list = Lists.transform(cityList, new Function<City, String>() {
             @Override
             public String apply(City input) {
@@ -77,8 +78,27 @@ public class PredicateTest {
         });
         System.out.println("list:" + list);
 
-        Predicate<String> pre = Predicates.compose(new SmallPopulationPredicate(), Functions.forMap(cityMap));
-        Collection<String> cities = Collections2.filter(list,pre);
+        //Java8 stream api
+        List<String> cityNames = cityList.stream().map(City::getName).collect(Collectors.toList());
+        System.out.println("cityNames:" + list);
+
+
+        Predicate<String> pre = Predicates.compose(new SmallPopulationPredicate(), Functions.forMap(cityMap));  //组合
+        Collection<String> cities = Collections2.filter(list, pre);
+        System.out.println(cities);
+
+
+        //or
+        cities = Collections2.filter(cityList, new SmallPopulationPredicate()).stream().map(City::getName).collect(Collectors.toList());
+        System.out.println(cities);
+
+        //or java8 api
+        cities = cityList.stream().filter(new java.util.function.Predicate<City>() {
+            @Override
+            public boolean test(City city) {
+                return city.getPopulation() <= 10000;
+            }
+        }).map(City::getName).collect(Collectors.toList());
         System.out.println(cities);
     }
 }

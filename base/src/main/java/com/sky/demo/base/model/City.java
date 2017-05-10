@@ -1,17 +1,14 @@
 package com.sky.demo.base.model;
 
+import com.google.common.base.Objects;
+
 public class City {
 
     private String name;
-
     private String zipCode;
-
     private Integer population;
-
     private Climate climate;
-
     private Double averageRainfall;
-
 
     public City(String name, String zipCode, Integer population, Climate climate, Double averageRainfall) {
         this.name = name;
@@ -66,13 +63,12 @@ public class City {
 
     @Override
     public String toString() {
-        return "City{" +
-                "name='" + name + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", population=" + population +
-                ", climate='" + climate + '\'' +
-                ", averageRainfall=" + averageRainfall +
-                '}';
+        return Objects.toStringHelper(this)
+                .add("name", name)
+                .add("zipCode", zipCode)
+                .add("population", population)
+                .add("climate", climate)
+                .add("averageRainfall", averageRainfall)
+                .toString();
     }
-
 }
