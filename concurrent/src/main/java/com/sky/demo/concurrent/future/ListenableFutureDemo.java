@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 /**
  * Created by user on 17/5/11.
  */
-public class ListenableFutrueDemo {
+public class ListenableFutureDemo {
 
     //包装Executors创建的线程池
     private static final ListeningExecutorService listeningExecutorService =
