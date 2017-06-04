@@ -14,15 +14,15 @@ import java.util.concurrent.TimeUnit;
  */
 public class CommonLoadingCache {
 
+    //LoadingCache is thread-safe
     private static final LoadingCache<String, Object> cache = CacheBuilder.newBuilder().maximumSize(100)
-            .refreshAfterWrite(2, TimeUnit.SECONDS)
-            .build(new CacheLoader<String, Object>() {
+            .refreshAfterWrite(2, TimeUnit.SECONDS).build(new CacheLoader<String, Object>() {
                 @Override
                 public Object load(String s) throws Exception {
                     return "from cache : " + s;
                 }
 
-                //可实现异步reload
+                // 可实现异步reload
                 @Override
                 public ListenableFuture<Object> reload(String key, Object oldValue) throws Exception {
                     System.out.println("reload : " + new Date());
@@ -30,7 +30,6 @@ public class CommonLoadingCache {
                 }
 
             });
-
 
     public static Object get(String key) {
         Object value = null;
@@ -51,6 +50,7 @@ public class CommonLoadingCache {
     }
 
 
+
     public static void main(String[] args) {
 
         String str1 = (String) CommonLoadingCache.get("str1");
@@ -62,5 +62,3 @@ public class CommonLoadingCache {
         System.out.println(str1);
     }
 }
-
-

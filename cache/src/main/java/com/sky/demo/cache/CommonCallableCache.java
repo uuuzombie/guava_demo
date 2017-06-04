@@ -11,14 +11,12 @@ import java.util.concurrent.ExecutionException;
  */
 public class CommonCallableCache {
 
-    private static final Cache<String,Object> cache = CacheBuilder.newBuilder().maximumSize(1000).build();
-
+    private static final Cache<String, Object> cache = CacheBuilder.newBuilder().maximumSize(1000).build();
 
     public static Object get(String key) {
-
         Object value = null;
         try {
-            value = cache.get(key,new Callable<Object>() {
+            value = cache.get(key, new Callable<Object>() {
                 @Override
                 public Object call() throws Exception {
                     return "from cache :" + key;
@@ -32,7 +30,7 @@ public class CommonCallableCache {
 
     public static void put(String key, Object value) {
         try {
-            cache.put(key,value);
+            cache.put(key, value);
         } catch (Exception e) {
             e.printStackTrace();
         }

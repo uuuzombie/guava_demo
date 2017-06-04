@@ -9,17 +9,17 @@ import java.util.Map;
  */
 public class CommonCache {
 
-    private static final Map<String, Object> cache = Maps.newConcurrentMap();
+    private static final Map<String, Object> cache = Maps.newConcurrentMap();       //ConcurrentHashMap need sync
 
     static {
-        cache.put("key","value");
+        cache.put("key", "value");
     }
 
-    public static Object get(String key) {
+    public synchronized static Object get(String key) {
         return cache.get(key);
     }
 
-    public static void put(String key, Object value) {
+    public synchronized static void put(String key, Object value) {
         cache.put(key, value);
     }
 }
